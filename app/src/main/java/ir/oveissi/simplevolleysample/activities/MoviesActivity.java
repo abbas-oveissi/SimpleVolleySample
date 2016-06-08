@@ -15,6 +15,7 @@ import ir.oveissi.simplevolleysample.data.NetworkExceptionHandler;
 import ir.oveissi.simplevolleysample.data.RequestRepository;
 import ir.oveissi.simplevolleysample.data.jsonmodel.Movie;
 import ir.oveissi.simplevolleysample.data.jsonmodel.TmpMovies;
+import ir.oveissi.simplevolleysample.utils.EndlessRecyclerOnScrollListener;
 
 public class MoviesActivity extends AppCompatActivity {
 
@@ -29,12 +30,19 @@ public class MoviesActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter=new MoviesAdapter(this, new ArrayList<Movie>());
         rv.setAdapter(mListAdapter);
-        get_data_from_webservice();
+
+        rv.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
+            @Override
+            public void onLoadMore(int current_page) {
+                get_data_from_webservice(current_page);
+            }
+        });
+        get_data_from_webservice(1);
     }
 
-    private void get_data_from_webservice() {
+    private void get_data_from_webservice(int page) {
         RequestRepository rr=new RequestRepository(MoviesActivity.this);
-        rr.getMovies("batman", 1, new MyNetworkListener<TmpMovies>() {
+        rr.getMovies("batman", page, new MyNetworkListener<TmpMovies>() {
             @Override
             public void getResult(TmpMovies result) {
                 for(Movie m:result.Search)
