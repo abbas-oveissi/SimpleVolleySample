@@ -41,8 +41,8 @@ public class CustomGsonRequest<T> extends Request<T> {
         this.listener=listener;
     }
 
-    //gahi niaze tooye header bakhshi az request ha parameter haye khasi mesle
-    //token ersal beshe,iin method be manzoore inkar ezafe shode
+    //gahi niaze tooye header bakhshi az request ha token ersal beshe,
+    //iin method be manzoore inkar ezafe shode
     public void setToken(String token)
     {
         this.token=token;
@@ -53,7 +53,8 @@ public class CustomGsonRequest<T> extends Request<T> {
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         //dar sooratii ke method e setToken() estefade shode bashad,ba estefade az in
-        //shart,token dar header gharar migiirad
+        //shart,token dar header gharar migiirad.
+        //in mesal baraye auth ba JWT hast
         if(needToken)
         {
             Map<String,String> headers=new HashMap<>();
