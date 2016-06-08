@@ -6,15 +6,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import ir.oveissi.simplevolleysample.R;
-import ir.oveissi.simplevolleysample.data.NetworkManager;
+import ir.oveissi.simplevolleysample.data.MyNetworkListener;
+import ir.oveissi.simplevolleysample.data.NetworkExceptionHandler;
+import ir.oveissi.simplevolleysample.data.RequestRepository;
 import ir.oveissi.simplevolleysample.data.jsonmodel.DetailMovie;
 
 public class DetailActivity extends AppCompatActivity {
@@ -41,28 +38,25 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void get_data_from_webservice(String movie_id) {
-        String url = NetworkManager.prefixURL + "?i="+movie_id+"&plot=short&r=json";
-        StringRequest sr=new StringRequest(Request.Method.GET,url, new Response.Listener<String>() {
+        RequestRepository rr=new RequestRepository(DetailActivity.this);
+        rr.getMovieByID(movie_id, new MyNetworkListener<DetailMovie>() {
             @Override
-            public void onResponse(String response) {
-                Gson g=new Gson();
-                DetailMovie tmp=g.fromJson(response,DetailMovie.class);
-                tvTitle.setText(tmp.Title);
-                tvRate.setText(tmp.Rated);
-                tvRuntime.setText(tmp.Runtime);
-                tvDirector.setText(tmp.Director);
+            public void getResult(DetailMovie result) {
+                tvTitle.setText(result.Title);
+                tvRate.setText(result.Rated);
+                tvRuntime.setText(result.Runtime);
+                tvDirector.setText(result.Director);
                 Picasso.with(DetailActivity.this)
-                        .load(tmp.Poster)
+                        .load(result.Poster)
                         .placeholder(R.drawable.placeholder)
                         .into(imPoster);
+            }
+
+            @Override
+            public void getException(NetworkExceptionHandler error) {
+                Toast.makeText(DetailActivity.this, "خطا در دریافت", Toast.LENGTH_SHORT).show();
 
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetailActivity.this, "خطا در دریافت", Toast.LENGTH_SHORT).show();
-            }
         });
-        NetworkManager.getInstance(this).requestQueue.add(sr);
     }
 }
