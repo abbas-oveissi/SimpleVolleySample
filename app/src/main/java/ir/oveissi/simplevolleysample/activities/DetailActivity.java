@@ -1,4 +1,4 @@
-package ir.oveissi.simplevolleysample.activies;
+package ir.oveissi.simplevolleysample.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
