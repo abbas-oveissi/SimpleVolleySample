@@ -1,4 +1,4 @@
-package ir.oveissi.simplevolleysample.activies;
+package ir.oveissi.simplevolleysample.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,19 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 import ir.oveissi.simplevolleysample.R;
 import ir.oveissi.simplevolleysample.adapters.MoviesAdapter;
 import ir.oveissi.simplevolleysample.data.MyNetworkListener;
 import ir.oveissi.simplevolleysample.data.NetworkExceptionHandler;
-import ir.oveissi.simplevolleysample.data.NetworkManager;
 import ir.oveissi.simplevolleysample.data.RequestRepository;
 import ir.oveissi.simplevolleysample.data.jsonmodel.Movie;
 import ir.oveissi.simplevolleysample.data.jsonmodel.TmpMovies;

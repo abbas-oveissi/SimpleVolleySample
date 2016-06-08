@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ir.oveissi.simplevolleysample.R;
-import ir.oveissi.simplevolleysample.activies.DetailActivity;
+import ir.oveissi.simplevolleysample.activities.DetailActivity;
 import ir.oveissi.simplevolleysample.data.jsonmodel.Movie;
 
 
